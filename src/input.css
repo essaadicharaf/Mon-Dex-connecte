@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Bouton principal */
+  .btn-primary {
+    @apply h-12 px-6 rounded-xl bg-brand text-white font-bold transition-all duration-200 hover:opacity-90;
+  }
+
+  /* Bouton secondaire (contour) */
+  .btn-outline {
+    @apply h-11 px-4 rounded-xl border-2 border-line bg-surface text-ink font-bold outline-none transition-all duration-200 hover:border-brand;
+  }
+
+  /* Bouton de filtre par type */
+  .chip {
+    @apply h-11 px-5 rounded-full border-2 border-line bg-surface text-ink font-bold outline-none transition-all duration-200 hover:border-brand;
+  }
+
+  /* Champ de formulaire */
+  .field {
+    @apply h-12 rounded-xl border-2 border-line bg-surface px-3 text-base text-ink outline-none transition-all duration-200 focus:border-brand;
+  }
+}
