@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="./dist/output.css" />
   </head>
   <body class="bg-ground font-body text-ink min-h-screen antialiased">
-    <header class="bg-[#38686A] border-b  border-line text-white fixed top-0 z-40 w-full">
+    <header class="bg-[#38686A] border-b border-line text-white fixed top-0 z-40 w-full">
       <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 sm:px-8 py-4 ms:mb-5">
         <div class="flex items-center gap-3">
           <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand text-white shadow-md">
-            <svg aria-hidden="true" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <svg
+              aria-hidden="true"
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
               <circle cx="12" cy="12" r="9"></circle>
               <path d="M3 12h18"></path>
               <circle cx="12" cy="12" r="3"></circle>
@@ -19,90 +27,188 @@
           </div>
           <div>
             <p class="font-display text-2xl font-extrabold leading-none tracking-tight">Mon Dex</p>
-            <p class="text-xs sm:text-sm text-white">Digimon · <span id="creature-count">06</span> créatures</p>
+            <p class="text-xs sm:text-sm text-white">Digimon · <span id="creature-count">0</span> créatures</p>
           </div>
         </div>
-
-        <nav aria-label="Navigation principale" class="flex sm:flex-wrap sm:justify-end items-center gap-2 overflow-x-auto pb-1 max-w-full scrollbar-none text-xs sm:text-sm sm:">
-          <a href="#grid" class="rounded-full bg-[#38686A] px-3.5 ms:px-1 py-1.5 border-2 border-solid border-brand ms:py-0.5 shrink-0 text-white hover:bg-line transition-colors focus:outline-none focus:ring-2 focus:ring-brand">Créatures</a>
-          <a href="#team" class="rounded-full bg-[#38686A] px-3.5 py-1.5 shrink-0 border-2 border-solid border-brand text-white hover:bg-line transition-colors focus:outline-none focus:ring-2 focus:ring-brand">Mon équipe · <span id="team-count">0</span>/6</a>
-          <a href="#create" class="rounded-2xl bg-brand px-3.5 py-[10px] shrink-0 text-center font-bold text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-brand">+ Nouvelle créature</a>
+        <nav
+          aria-label="Navigation principale"
+          class="flex sm:flex-wrap sm:justify-end items-center gap-2 overflow-x-auto pb-1 max-w-full scrollbar-none text-xs sm:text-sm sm:"
+        >
+          <a
+            href="#grid"
+            class="rounded-full bg-[#38686A] px-3.5 ms:px-1 py-1.5 border-2 border-solid border-brand ms:py-0.5 shrink-0 text-white hover:bg-line transition-colors focus:outline-none focus:ring-2 focus:ring-brand"
+            >Créatures</a
+          >
+          <a
+            href="#team"
+            class="rounded-full bg-[#38686A] px-3.5 py-1.5 shrink-0 border-2 border-solid border-brand text-white hover:bg-line transition-colors focus:outline-none focus:ring-2 focus:ring-brand"
+            >Mon équipe · <span id="team-count">0</span>/6</a
+          >
+          <a
+            href="#create"
+            class="rounded-2xl bg-brand px-3.5 py-[10px] shrink-0 text-center font-bold text-white hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-brand"
+            >+ Nouvelle créature</a
+          >
         </nav>
       </div>
     </header>
-
     <main class="mx-auto sm:mt-[50px] flex max-w-7xl flex-col gap-8 px-4 sm:px-8 py-8">
       <section aria-label="Recherche et filtres" class="flex flex-col gap-8">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">Trouver un Digimon</h1>
           <label class="flex w-full md:max-w-md flex-col gap-1.5 text-xs sm:text-sm font-bold text-ink">
             Rechercher par nom
-            <input id="search" type="search" placeholder="ex. Agumon" class="field font-normal placeholder-muted border-3 border-[#264653]  focus:ring-2 focus:ring-brand" />
+            <input
+              id="search"
+              type="search"
+              placeholder="ex. Agumon"
+              class="field font-normal placeholder-muted border-3 border-[#264653] focus:ring-2 focus:ring-brand"
+            />
           </label>
         </div>
-
-        <div id="filters" role="group" aria-label="Filtrer par attribut" class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2  scrollbar-none">
-          <button type="button" data-type="all" class="chip bg-brand border-brand text-white shrink-0 focus:ring-2 focus:ring-brand">Tous</button>
-          <button type="button" data-type="Vaccine" class="chip shrink-0 hover:border-attribute-vaccine focus:ring-2 focus:ring-attribute-vaccine">Vaccine</button>
-          <button type="button" data-type="Data" class="chip shrink-0 hover:border-attribute-data focus:ring-2 focus:ring-attribute-data">Data</button>
-          <button type="button" data-type="Virus" class="chip shrink-0 hover:border-attribute-virus focus:ring-2 focus:ring-attribute-virus">Virus</button>
+        <div
+          id="filters"
+          role="group"
+          aria-label="Filtrer par attribut"
+          class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2 scrollbar-none"
+        >
+          <button
+            type="button"
+            data-type="all"
+            class="chip bg-brand border-brand text-white shrink-0 focus:ring-2 focus:ring-brand"
+          >
+            Tous
+          </button>
+          <button
+            type="button"
+            data-type="Vaccine"
+            class="chip shrink-0 hover:border-attribute-vaccine focus:ring-2 focus:ring-attribute-vaccine"
+          >
+            Vaccine
+          </button>
+          <button
+            type="button"
+            data-type="Data"
+            class="chip shrink-0 hover:border-attribute-data focus:ring-2 focus:ring-attribute-data"
+          >
+            Data
+          </button>
+          <button
+            type="button"
+            data-type="Virus"
+            class="chip shrink-0 hover:border-attribute-virus focus:ring-2 focus:ring-attribute-virus"
+          >
+            Virus
+          </button>
         </div>
       </section>
-
       <div class="flex flex-col lg:flex-row gap-8 items-start w-full">
-        <section id="grid" aria-label="Créatures" class="grid w-full min-w-0 flex-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <!-- cards  -->
-        </section>
-
-        <aside class="flex w-full lg:w-[420px] sm:w-full shrink-0 flex-col gap-6 rounded-xl">
+        <div class="flex flex-col w-full min-w-0 flex-1">
+          <section
+            id="grid"
+            aria-label="Créatures"
+            class="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+          ></section>
+          <!-- add btn load more  -->
+          <div class="flex justify-center pt-8 pb-4">
+            <button
+              id="load-more-btn"
+              type="button"
+              class="btn-primary flex items-center justify-center gap-2 px-8 py-3 font-bold border"
+            >
+              Charger plus
+            </button>
+          </div>
+        </div>
+        <aside class="flex w-full lg:w-[420px] shrink-0 flex-col gap-6 rounded-xl">
           <!-- PANNEAU DE DÉTAIL -->
-          <section id="detail" aria-label="Détail de la créature" class="flex flex-col items-center justify-center text-center gap-4 rounded-xl border-2 border-dashed border-line bg-surface p-8 min-h-[360px] shadow-sm">
+          <section
+            id="detail"
+            aria-label="Détail de la créature"
+            class="flex flex-col items-center justify-center text-center gap-4 rounded-xl border-2 border-dashed border-line bg-surface p-8 min-h-[360px] shadow-sm"
+          >
             <div class="w-16 h-16 rounded-full bg-brand-light flex items-center justify-center text-brand">
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
               </svg>
             </div>
             <div>
               <h3 class="font-display text-base font-bold text-ink">Aucun Digimon sélectionné</h3>
-              <p class="text-xs text-muted m-1 max-w-[220px]">Cliquez sur une carte de la grille pour afficher ses détails et ses statistiques.</p>
+              <p class="text-xs text-muted m-1 max-w-[220px]">
+                Cliquez sur une carte de la grille pour afficher ses détails et ses statistiques.
+              </p>
             </div>
           </section>
-
-          <section id="team" aria-label="Mon équipe" class="flex flex-col gap-4 rounded-xl bg-surface p-4 sm:p-6 border-2 border-line shadow-lg">
+          <section
+            id="team"
+            aria-label="Mon équipe"
+            class="flex flex-col gap-4 rounded-xl bg-surface p-4 sm:p-6 border-2 border-line shadow-lg"
+          >
             <div class="flex items-center justify-between">
               <h2 class="font-display text-2xl font-extrabold text-ink">Mon équipe</h2>
-              <span class="rounded-full bg-brand-light border border-brand/40 px-3 py-1 font-mono text-sm font-bold text-brand"> <span id="team-counter">0</span>/6 </span>
+              <span
+                class="rounded-full bg-brand-light border border-brand/40 px-3 py-1 font-mono text-sm font-bold text-brand"
+              >
+                <span id="team-counter">0</span>/6
+              </span>
             </div>
             <p class="text-xs text-muted">6 Digimon au maximum · aucun doublon autorisé.</p>
-
             <div id="team-list" class="flex flex-col gap-2 min-h-[100px] justify-center">
-              <p id="empty-team-msg" class="py-6 text-center text-xs text-muted border-2 border-dashed border-line rounded-xl">Votre équipe est vide. Cliquez sur "Ajouter à l'équipe".</p>
+              <p
+                id="empty-team-msg"
+                class="py-6 text-center text-xs text-muted border-2 border-dashed border-line rounded-xl"
+              >
+                Votre équipe est vide. Cliquez sur "Ajouter à l'équipe".
+              </p>
             </div>
           </section>
         </aside>
       </div>
-      <section id="create" aria-label="Nouvelle créature" class="flex flex-col gap-6 rounded-xl bg-surface p-6 sm:p-8 border border-line shadow-lg">
+      <section
+        id="create"
+        aria-label="Nouvelle créature"
+        class="flex flex-col gap-6 rounded-xl bg-surface p-6 sm:p-8 border border-line shadow-lg"
+      >
         <div>
           <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-ink">Nouveau Digimon</h2>
           <p class="text-muted text-xs sm:text-sm">Chaque champ est vérifié avant l'ajout de la créature.</p>
         </div>
-
         <form id="creature-form" novalidate class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           <!-- Numéro -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Numéro
-            <input name="id" type="text" required placeholder="#013" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="id"
+              type="text"
+              required
+              placeholder="#013"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Nom -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Nom
-            <input name="name" type="text" required placeholder="Nom du Digimon" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="name"
+              type="text"
+              required
+              placeholder="Nom du Digimon"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Attribut -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Attribut
@@ -114,7 +220,6 @@
             </select>
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Niveau  -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Niveau
@@ -127,42 +232,61 @@
             </select>
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Statistique 1 -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Puissance (0 à 999)
-            <input name="stat1" type="text" placeholder="ex. 450" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="stat1"
+              type="text"
+              placeholder="ex. 450"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Statistique 2 -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Défense (0 à 999)
-            <input name="stat2" type="text" placeholder="ex. 320" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="stat2"
+              type="text"
+              placeholder="ex. 320"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Statistique 3 -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Vitesse (0 à 999)
-            <input name="stat3" type="text" placeholder="ex. 380" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="stat3"
+              type="text"
+              placeholder="ex. 380"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Lien Image -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
             Lien de l'image
-            <input name="image" type="text" placeholder="https://…/image.png" class="field font-normal placeholder-muted border-3 border-[#264653]" />
+            <input
+              name="image"
+              type="text"
+              placeholder="https://…/image.png"
+              class="field font-normal placeholder-muted border-3 border-[#264653]"
+            />
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Description -->
           <label class="flex flex-col gap-1.5 text-xs font-bold text-ink col-span-full">
             Description
-            <textarea name="description" rows="3" placeholder="10 à 200 caractères" class="w-full rounded-xl border-2  border-3 border-[#264653] bg-surface p-3 text-sm text-ink font-normal placeholder-muted outline-none transition-all duration-200 focus:border-brand"></textarea>
+            <textarea
+              name="description"
+              rows="3"
+              placeholder="10 à 200 caractères"
+              class="w-full rounded-xl border-2 border-3 border-[#264653] bg-surface p-3 text-sm text-ink font-normal placeholder-muted outline-none transition-all duration-200 focus:border-brand"
+            ></textarea>
             <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
           </label>
-
           <!-- Boutons -->
           <div class="flex flex-wrap justify-end gap-3 col-span-full pt-2">
             <button type="reset" class="btn-outline px-6 py-2.5 text-sm font-semibold">Effacer</button>
@@ -171,12 +295,10 @@
         </form>
       </section>
     </main>
-
     <footer class="mx-auto text-center max-w-7xl px-4 sm:px-8 pb-10 text-xs text-muted">ESSAADI CHARAF EDDINE</footer>
-
     <!-- Scripts JS -->
-    <script src="./data.js" defer></script>
-    <script src="./script.js" defer></script>
-    
+    <!-- <script src="./data.js" defer></script>
+    <script src="./script.js" defer></script> -->
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
