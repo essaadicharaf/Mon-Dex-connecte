@@ -39,7 +39,7 @@ function updateTeamButtons() {
   });
 }
 
-//1
+//1 afficher
 const grid = document.querySelector("#grid");
 const creatureCount = document.querySelector("#creature-count");
 
@@ -239,7 +239,7 @@ const idInput = document.querySelector('input[name="id"]');
 const nameInput = document.querySelector('input[name="name"]');
 const typeSelect = document.querySelector('select[name="type"]');
 const levelSelect = document.querySelector('select[name="level"]');
-const stat1Input = document.querySelechtor('input[name="stat1"]');
+const stat1Input = document.querySelector('input[name="stat1"]');
 const stat2Input = document.querySelector('input[name="stat2"]');
 const stat3Input = document.querySelector('input[name="stat3"]');
 const imageInput = document.querySelector('input[name="image"]');
@@ -467,13 +467,13 @@ function renderTeam() {
 
 function addToTeam(creatureId) {
   if (team.length >= 6) {
-    // alert("Action refusée : Votre équipe est déjà complète (6 Digimon au maximum).");
+    alert("Action refusée : Votre équipe est déjà complète (6 Digimon au maximum).");
     return;
   }
 
   const isAlreadyInTeam = team.some((c) => c.id === creatureId);
   if (isAlreadyInTeam) {
-    // alert("Action refusée : Ce Digimon fait déjà partie de votre équipe (doublon interdit).");
+    alert("Action refusée : Ce Digimon fait déjà partie de votre équipe (doublon interdit).");
     return;
   }
 
