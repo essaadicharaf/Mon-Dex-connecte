@@ -1,5 +1,5 @@
 import { getCreatureByName, getCreatures } from "./services/api.js";
-import { renderGrid, updateCounter } from "./ui.js";
+import { renderDetail, renderGrid, resetDetail, updateCounter } from "./ui.js";
 //-----------------------------------------------//
 // part 1  - display creature and add btn to add 20 creature more
 //-----------------------------------------------//
@@ -78,3 +78,30 @@ if (searchInput) {
   });
 }
 // getCreatureByName("Agumon").then((data) => console.log(data));
+const detailPanel = document.querySelector("#detail");
+if (grid) {
+  grid.addEventListener("click", async (e) => {
+    if (e.target.closest('[data-action="add-team"]')) return;
+
+    const card = e.target.closest("article");
+    if (!card) return;
+    if (card) {
+      const creatureId = card.getAttribute("data-id");
+      try {
+        const creature = await getCreatureByName(creatureId);
+        renderDetail(creature);
+      } catch (error) {}
+      // const selected = creatures.find((c) => c.id === creatureId);
+      // if (selected) {
+      //   showDetail(selected);
+      // }
+    }
+  });
+}
+if (detailPanel) {
+  detailPanel.addEventListener("click", (e) => {
+    if (e.target.closest("#btn-close-detail")) {
+      resetDetail();
+    }
+  });
+}
