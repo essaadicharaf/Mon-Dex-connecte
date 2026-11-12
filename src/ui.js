@@ -12,7 +12,6 @@ const createCardElement = (creature) => {
   article.setAttribute("data-id", creature.id);
   article.className =
     "flex h-full flex-col justify-between gap-3 rounded-xl bg-surface p-3 pb-4 border-2 border-line shadow-md hover:-translate-y-1 hover:border-brand transition-all duration-200 cursor-pointer";
-
   article.innerHTML = `
     <div class="flex flex-col gap-2 justify-between">
       <div class="relative flex h-54 w-full items-center justify-center rounded-xl bg-slate-300 border border-line/50 overflow-hidden p-1">
@@ -38,7 +37,7 @@ export const renderGrid = (creaturesList, append = false) => {
   }
   if (creaturesList.length === 0 && !append) {
     grid.innerHTML = `
-      <p class="col-span-full py-12 text-center text-muted text-sm border-2 border-dashed border-line rounded-xl">
+      <p class="col-span-full py-12 text-center text-ink bg-surface text-sm border-2 border-dashed border-line rounded-xl">
         Aucun Digimon trouvé.
       </p>
     `;
@@ -55,3 +54,4 @@ export const updateCounter = (count) => {
     creatureCount.textContent = String(count).padStart(2, "0");
   }
 };
+const detailPanel = document.querySelector("#detail");
