@@ -24,6 +24,7 @@ module.exports = {
           vaccine: "#15803D",
           data: "#1D4ED8",
           virus: "#B91C1C",
+          free: "#8a0194",
         },
       },
     },

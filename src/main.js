@@ -5,6 +5,7 @@ let currentPage = 0;
 let currentFilter = "all";
 const btnLoadMore = document.getElementById("load-more-btn");
 const allBtnFilters = document.querySelectorAll("#filters button");
+//
 function filter() {
   const filtered = allCreaturesLoad.filter((c) => {
     const matchType = currentFilter === "all" || c.type === currentFilter;
@@ -12,6 +13,7 @@ function filter() {
   });
   renderGrid(filtered, false);
 }
+//
 allBtnFilters.forEach((btn) => {
   btn.addEventListener("click", () => {
     allBtnFilters.forEach((b) => b.classList.remove("bg-brand", "border-brand", "text-white"));
@@ -20,6 +22,7 @@ allBtnFilters.forEach((btn) => {
     filter();
   });
 });
+// get 20 creatures in fetch and current page + 1
 async function loadBatch() {
   if (btnLoadMore) {
     btnLoadMore.disabled = true;
@@ -47,4 +50,7 @@ async function loadBatch() {
 if (btnLoadMore) {
   btnLoadMore.addEventListener("click", loadBatch);
 }
-loadBatch();
+loadBatch()
+
+
+
