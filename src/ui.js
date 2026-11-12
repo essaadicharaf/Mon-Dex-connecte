@@ -69,7 +69,7 @@ export const renderDetail = (creature) => {
   } else if (creature.type === "Virus") {
     badgeColor = "border-red-800 text-attribute-virus";
   }
-  detailPanel.className = "flex flex-col gap-4 rounded-xl border border-line bg-surface p-8 shadow-sm w-full";
+  detailPanel.className = "flex flex-col gap-4 rounded-xl border border-line bg-surface p-5 shadow-sm w-full";
   detailPanel.innerHTML = `
     <div class="flex items-center justify-between">
       <span class="font-mono text-sm text-muted font-bold">${creature.id} · Détail</span>
@@ -77,8 +77,8 @@ export const renderDetail = (creature) => {
         ✕
       </button>
     </div>
-    <div class="flex h-auto w-full items-center justify-center rounded-xl bg-brand-light border border-line/40 overflow-hidden">
-      <img src="${creature.image}" alt="${creature.name}" class="rounded-xl h-full w-full object-cover p-1.5 pointer-events-none" />
+    <div class="flex h-auto w-full items-center justify-center rounded-xl bg-slate-300 border border-line/40 overflow-hidden">
+      <img src="${creature.image}" alt="${creature.name}" class="rounded-xl h-full w-full object-cover p-1 pointer-events-none" />
     </div>
     <div class="flex items-center justify-between">
       <h2 class="font-display text-2xl font-extrabold text-ink">${creature.name}</h2>
