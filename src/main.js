@@ -50,7 +50,22 @@ async function loadBatch() {
 if (btnLoadMore) {
   btnLoadMore.addEventListener("click", loadBatch);
 }
-loadBatch()
+loadBatch();
+//-----------------------------------------------//
+// part 2
+// test getCreatureByName
+// console.log(getCreatureByName(111));
 
-
-
+//searching by name in input
+const searchInput = document.querySelector("#search");
+function Search() {
+  const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  const searchName = allCreaturesLoad.filter((s) => {
+    const matchName = s.name.toLowerCase().trim().includes(searchTerm);
+    return matchName;
+  });
+  renderGrid(searchName);
+}
+if (searchInput) {
+  searchInput.addEventListener("input", Search);
+}
