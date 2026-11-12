@@ -1,14 +1,30 @@
 const BASE_URL = "https://digi-api.com/api/v1";
+//
 export const toCreature = (raw) => {
+  const formattedId = `#${String(raw.id).padStart(3, "0")}`;
   const type = raw.attributes && raw.attributes.length > 0 ? raw.attributes[0].attribute : "Data";
   const level = raw.levels && raw.levels.length > 0 ? raw.levels[0].level : "Rookie";
   const image = raw.images && raw.images.length > 0 ? raw.images[0].href : raw.image || "";
-  const formattedId = `#${String(raw.id).padStart(3, "0")}`;
   const enDesc = raw.descriptions && raw.descriptions.find((d) => d.language === "en_us");
   const description = enDesc ? enDesc.description : "Aucune description disponible.";
-  const attackStat = ((raw.id * 37) % 500) + 350;
-  const defenceStat = ((raw.id * 53) % 450) + 300;
-  const speedStat = ((raw.id * 29) % 480) + 320;
+  const levelBase = {
+    "Baby I": 100,
+    "Baby II": 180,
+    Child: 320,
+    Rookie: 320,
+    Adult: 500,
+    Champion: 500,
+    Perfect: 680,
+    Ultimate: 820,
+    Mega: 850,
+  };
+  const base = levelBase[level] || 300;
+  const skillsCount = raw.skills ? raw.skills.length : 0;
+  const fieldsCount = raw.fields ? raw.fields.length : 0;
+  const nextEvoCount = raw.nextEvolutions ? raw.nextEvolutions.length : 0;
+  const attackStat = Math.min(999, base + skillsCount * 15);
+  const defenceStat = Math.min(999, base + fieldsCount * 25 + (raw.id % 50));
+  const speedStat = Math.min(999, base + nextEvoCount * 4 + (raw.id % 40));
   return {
     id: formattedId,
     name: raw.name,
@@ -34,6 +50,7 @@ export const getCreatureByName = async (query) => {
   const data = await response.json();
   return toCreature(data);
 };
+// get 20 creatures in api
 export const getCreatures = async (pageSize = 20, page = 0) => {
   const response = await fetch(`${BASE_URL}/digimon?pageSize=${pageSize}&page=${page}`);
   if (!response.ok) {
@@ -55,3 +72,4 @@ export const getCreatures = async (pageSize = 20, page = 0) => {
   );
   return creatures;
 };
+//
