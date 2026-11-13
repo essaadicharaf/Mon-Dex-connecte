@@ -58,22 +58,42 @@ loadBatch();
 // part 2 - search by name and detailes of creature
 //----------------------------------------------------//
 //searching by name in input
+const searchForm = document.querySelector("#search-form");
 const searchInput = document.querySelector("#search");
+const clearSearchBtn = document.querySelector("#btn-clear-search");
+async function searchDigimon() {
+  const query = searchInput.value.trim();
+  if (query === "") {
+    if (btnLoadMore) btnLoadMore.classList.remove("hidden");
+    filter();
+    return;
+  }
+  if (btnLoadMore) btnLoadMore.classList.add("hidden");
+  try {
+    const creature = await getCreatureByName(query);
+    renderGrid([creature], false);
+  } catch (error) {
+    renderGrid([], false);
+  }
+}
+if (searchForm) {
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchDigimon();
+  });
+}
+if (clearSearchBtn) {
+  clearSearchBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    if (btnLoadMore) btnLoadMore.classList.remove("hidden");
+    filter();
+  });
+}
 if (searchInput) {
-  searchInput.addEventListener("keydown", async (e) => {
-    if (e.key !== "Enter") return;
-    const query = searchInput.value.trim();
-    if (query === "") {
+  searchInput.addEventListener("input", () => {
+    if (searchInput.value.trim() === "") {
       if (btnLoadMore) btnLoadMore.classList.remove("hidden");
       filter();
-      return;
-    }
-    if (btnLoadMore) btnLoadMore.classList.add("hidden");
-    try {
-      const creature = await getCreatureByName(query);
-      renderGrid([creature], false);
-    } catch (error) {
-      renderGrid([], false);
     }
   });
 }
@@ -82,7 +102,6 @@ const detailPanel = document.querySelector("#detail");
 if (grid) {
   grid.addEventListener("click", async (e) => {
     if (e.target.closest('[data-action="add-team"]')) return;
-
     const card = e.target.closest("article");
     if (!card) return;
     if (card) {
