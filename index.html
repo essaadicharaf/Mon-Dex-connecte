@@ -56,15 +56,27 @@
       <section aria-label="Recherche et filtres" class="flex flex-col gap-8">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">Trouver un Digimon</h1>
-          <label class="flex w-full md:max-w-md flex-col gap-1.5 text-xs sm:text-sm font-bold text-ink">
-            Rechercher par nom
-            <input
-              id="search"
-              type="search"
-              placeholder="ex. Agumon"
-              class="field font-normal placeholder-muted border-3 border-[#264653] focus:ring-2 focus:ring-brand"
-            />
-          </label>
+          <form id="search-form" class="flex w-full md:max-w-lg flex-wrap items-end gap-2">
+            <label class="flex w-full flex-col gap-1.5 text-xs sm:text-sm font-bold text-ink">
+              Rechercher par nom
+              <input
+                id="search"
+                type="search"
+                placeholder="ex. Agumon"
+                class="field font-normal placeholder-muted border-3 border-[#264653] focus:ring-2 focus:ring-brand"
+              />
+            </label>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="submit" class="btn-primary px-4 py-2.5 text-xs sm:text-sm font-bold">Rechercher</button>
+              <button
+                type="button"
+                id="btn-clear-search"
+                class="btn-outline px-4 py-2.5 text-xs sm:text-sm font-semibold"
+              >
+                Effacer
+              </button>
+            </div>
+          </form>
         </div>
         <div
           id="filters"
@@ -99,6 +111,13 @@
             class="chip shrink-0 hover:border-attribute-virus focus:ring-2 focus:ring-attribute-virus"
           >
             Virus
+          </button>
+          <button
+            type="button"
+            data-type="Free"
+            class="chip shrink-0 hover:border-attribute-free focus:ring-2 focus:ring-attribute-free"
+          >
+            Free
           </button>
         </div>
       </section>
