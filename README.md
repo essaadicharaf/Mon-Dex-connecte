@@ -1,107 +1,141 @@
-# Mon Dex — Digimon
+````markdown
+# Mon Dex connecté — Digimon
 
-Une encyclopédie web interactive dédiée à l'univers **Digimon**, développée en HTML5, Tailwind CSS et JavaScript moderne (Vanilla JS). Ce projet transforme une maquette statique en une application dynamique permettant d'explorer une collection de créatures numériques, d'afficher leurs statistiques détaillées en barres interactives, d'exécuter des recherches et filtrages combinés, de composer une équipe de combat limitée à 6 membres et d'ajouter de nouveaux Digimon sécurisés par validation d'expressions régulières.
-
----
-
-## 🎯 Univers et Données
-
-* **Univers choisi :** Digimon
-* **Attributs (Types) :** Vaccine, Data, Virus
-* **Niveaux d'évolution :** Rookie, Champion, Ultimate, Mega
-* **Statistiques évaluées :** Puissance (ATK), Défense (DEF), Vitesse (SPD) — échelonnées de 0 à 999
-* **Source des données et visuels :** [Digimon Public Database (Shadowsmith)](https://digimon.shadowsmith.com/)
+Application web interactive de type encyclopédie numérique dédiée à l'univers **Digimon**, connectée en temps réel à une API REST. Développée en **HTML5**, **Tailwind CSS** et **JavaScript modulaire (ES6 Modules)**, elle permet d'explorer le catalogue des créatures, de rechercher un Digimon, de consulter ses statistiques détaillées et de sauvegarder ses favoris.
 
 ---
 
-## ✨ Fonctionnalités JavaScript Implémentées (Partie 2)
+## 🌐 Démo en ligne & Dépôt
 
-1. **Affichage dynamique de la grille :** Les cartes codées en dur dans le HTML ont été supprimées. La grille principale est générée dynamiquement à partir de la collection `creatures` de `data.js`.
-2. **Panneau de détail :** Le clic sur une carte affiche ses visuels, sa description textuelle et ses 3 statistiques sous forme de barres de progression proportionnelles calculées dynamiquement sur une échelle maximale de 999 :
-   $$\text{Pourcentage} = \min\left(100, \operatorname{round}\left(\frac{\text{valeur}}{999} \times 100\right)\right)$$
-3. **Recherche en temps réel :** Filtrage instantané lors de la saisie d'un nom (`input`), sans sensibilité aux majuscules/minuscules.
-4. **Filtres par attribut :** Boutons de sélection d'attribut (*Tous*, *Vaccine*, *Data*, *Virus*) qui fonctionnent en synergie totale avec la barre de recherche.
-5. **Formulaire de création de créature :** Ajout d'un nouveau Digimon avec validation par expressions régulières. Contrôle visuel déclenché à la perte de focus (`blur`), feedback immédiat en cours de saisie corrective (`input`), et blocage de la soumission (`submit`) en cas d'erreur.
-6. **Gestion de l'équipe (Event Delegation) :** Ajout et suppression de créatures gérés de manière centralisée grâce à un seul écouteur d'événements sur la grille (`#grid`) et un seul écouteur sur la liste de l'équipe (`#team-list`).
-7. **Règles métier de l'équipe :**
-   * Limite stricte de 6 créatures au maximum.
-   * Interdiction absolue des doublons.
-   * Messages explicites d'alerte en cas d'action refusée.
-   * Compteurs d'équipe synchronisés en temps réel ($x/6$) dans la barre de navigation et dans la section équipe.
-   * Désactivation automatique des boutons d'ajout (`disabled`, `opacity-50`, `cursor-not-allowed`) si la créature est déjà dans l'équipe ou si l'équipe a atteint sa capacité maximale.
+- **Application déployée (GitHub Pages) :** [https://essaadicharaf.github.io/Mon-Dex-connecte/](https://essaadicharaf.github.io/Mon-Dex-connecte/)
+- **Dépôt GitHub :** [https://github.com/essaadicharaf/Mon-Dex-connecte](https://github.com/essaadicharaf/Mon-Dex-connecte)
 
 ---
 
-## 🧪 Tests des Expressions Régulières (Console Tests)
+## 🔌 Univers & Source des Données (API)
 
-Chaque expression régulière a été testée dans la console JavaScript avec au moins 2 valeurs valides et 2 valeurs invalides :
-
-| Champ | Règle Métier | Expression Régulière | Valeurs Valides (`true`) | Valeurs Invalides (`false`) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Numéro** | `#` suivi de 3 chiffres, unicité dans la liste | `/^#\d{3}$/` | `"#013"`<br>`"#999"` | `"013"` *(absence de #)*<br>`"#12"` *(2 chiffres au lieu de 3)* |
-| **Nom** | 2 à 30 caractères, commence par lettre ou chiffre ; lettres, chiffres, espaces, `.`, `'` et `-` autorisés | `/^[A-Za-zÀ-ÿ0-9][A-Za-zÀ-ÿ0-9 .'-]{1,29}$/` | `"Agumon"`<br>`"War-Greymon 2"` | `"A"` *(inférieur à 2 caractères)*<br>`" Agumon"` *(commence par un espace)* |
-| **Statistique** | Nombre entier compris entre 0 et 999 | `/^\d{1,3}$/` | `"0"`<br>`"450"` | `"1000"` *(dépasse 3 chiffres)*<br>`"-50"` *(signe négatif interdit)* |
-| **Image** | URL https valide se terminant par `.png`, `.jpg`, `.jpeg`, `.webp` ou `.gif` | `/^https:\/\/\S+\.(png\|jpe?g\|webp\|gif)$/i` | `"https://site.com/agumon.png"`<br>`"https://domain.org/image.webp"` | `"http://site.com/image.png"` *(insecure, protocole http)*<br>`"https://site.com/doc.pdf"` *(extension non supportée)* |
-| **Description** | Longueur comprise entre 10 et 200 caractères inclus | `/^[\s\S]{10,200}$/` | `"Un Digimon courageux."`<br>`"Guerrier numérique protégeant le serveur réseau."` | `"Court"` *(moins de 10 caractères)*<br>`"a".repeat(201)` *(dépasse 200 caractères)* |
-
----
-
-## 🎨 États et Accessibilité (Partie 1 — Tailwind CSS)
-
-* **Survol (Hover) :** Légère élévation des cartes au survol (`hover:-translate-y-1 hover:border-brand hover:shadow-lg transition-all`).
-* **Focus visible :** Accessibilité clavier préservée sur tous les éléments interactifs (`focus:outline-none focus:ring-2 focus:ring-brand`).
-* **États de validation :**
-  * Bordure verte pour les champs validés (`!border-attribute-vaccine`).
-  * Bordure rouge et affichage du message contextuel d'erreur pour les champs invalides (`!border-attribute-virus`).
-* **États désactivés :** Verrouillage visuel et fonctionnel du bouton d'ajout d'équipe (`opacity-50 cursor-not-allowed pointer-events-none`).
+- **Univers choisi :** Digimon
+- **API publique utilisée :** [Digi-API](https://digi-api.com/api/v1) (`https://digi-api.com/api/v1`)
+- **Endpoints exploités :**
+  - `GET /digimon?pageSize=20&page={page}` — Récupération paginée de la liste des créatures.
+  - `GET /digimon/{name|id}` — Récupération des détails complets d'un Digimon (attributs, niveau, description, compétences et images).
+- **Normalisation des données :** Chaque réponse brute de l'API est transformée via la fonction `toCreature()` en un objet standardisé :
+  ```js
+  {
+    id: "#001",
+    name: "Agumon",
+    type: "Vaccine",
+    level: "Rookie",
+    image: "https://...",
+    description: "...",
+    stats: { attack: 450, defence: 320, speed: 380 }
+  }
+  ```
+````
 
 ---
 
-## 📂 Architecture des Fichiers
+## ✨ Fonctionnalités Implémentées
+
+### Partie 1 — Liste dynamique & Pagination depuis l'API
+
+- **Suppression des données statiques :** Remplacement intégral de `data.js` par des appels réseau `fetch` avec `async / await`.
+- **Chargement parallèle (`Promise.all`) :** Récupération simultanée des détails des 20 créatures de chaque page pour optimiser le temps d'affichage.
+- **Pagination incrémentale :** Bouton **« Charger plus »** chargeant les 20 Digimon suivants et les ajoutant à la grille sans écraser les résultats existants, avec mise à jour du compteur global.
+- **Filtrage par attribut :** Filtrage dynamique des créatures chargées selon leur type (**Tous**, **Vaccine**, **Data**, **Virus**, **Free**).
+
+### Partie 2 — Recherche API & Panneau de détail
+
+- **Recherche directe dans l'API :** Soumission d'une requête par nom exact ou numéro (`#id`) avec affichage ciblé du résultat.
+- **Réinitialisation rapide :** Bouton **« Effacer »** (et détection de vidage du champ) permettant de revenir instantanément à la grille principale.
+- **Panneau de détail interactif :** Clic sur une carte déclenchant une requête dédiée et affichant l'image, l'attribut, le niveau, la description ainsi que trois barres de progression proportionnelles sur 999 (**Puissance**, **Défense**, **Vitesse**).
+- **Protection anti double-requête :** Désactivation automatique des boutons (`disabled`) et verrouillage des clics pendant qu'une requête réseau est en cours.
+
+### Partie 3 — Gestion des états & Persistance navigateur
+
+- **Gestion complète des 4 états d'interface** (sur la grille, la recherche et le panneau de détail) :
+- **Chargement :** Indicateur visuel animé (_spinner_) et désactivation des contrôles.
+- **Succès :** Rendu fluide des cartes ou de la fiche détaillée.
+- **Vide (`404`) :** Vérification explicite de `response.ok` et affichage du message contextuel _« Aucune créature trouvée pour « … » »_.
+- **Erreur réseau / Hors ligne :** Message d'alerte clair accompagné d'un bouton **« Réessayer »** permettant de relancer la requête échouée.
+
+- **Favoris persistants (`localStorage`) :** Ajout ou retrait d'un Digimon via le bouton étoile SVG sur chaque carte, filtre dédié **« Favoris »**, et conservation des données après rechargement (`F5`).
+- **Dernière recherche (`sessionStorage`) :** Sauvegarde automatique du dernier terme recherché et restauration dans le champ et la grille lors d'un rechargement de page (effacé à la fermeture de l'onglet).
+
+---
+
+## 📁 Architecture Modulaire du Projet
+
+Le code JavaScript est structuré en modules ES6 indépendants selon le principe de responsabilité unique :
 
 ```text
-Mon-Dex/
-├── data.js               # Collection source (tableau d'au moins 12 créatures initiales)
-├── index.html            # Structure sémantique HTML5 & classes utilitaires Tailwind
-├── script.js             # Logique applicative : rendu DOM, filtres, regex, équipe
-├── tailwind.config.js    # Palette de couleurs personnalisée et configuration des polices
-├── package.json          # Dépendances de développement et scripts de build
-├── src/
-│   └── input.css         # Directives de base Tailwind CSS
+Mon-Dex-connecte/
+├── index.html                  # Structure sémantique HTML5 & composants Tailwind
+├── tailwind.config.js          # Palette personnalisée (brand, attributs) & breakpoints
+├── package.json                # Scripts de build Tailwind CSS
 ├── dist/
-│   └── output.css        # Fichier CSS compilé
-└── README.md             # Documentation complète du projet et jeux d'essais
+│   └── output.css              # Feuille de style compilée et minifiée
+├── src/
+│   ├── input.css               # Directives sources Tailwind CSS
+│   ├── main.js                 # Point d'entrée : orchestration, événements et état global
+│   ├── ui.js                   # Manipulation du DOM, rendu des cartes, détail et 4 états
+│   ├── storage.js              # Gestion pure du LocalStorage (favoris) et SessionStorage
+│   └── services/
+│       └── api.js              # Appels fetch Digi-API, gestion HTTP et normalisation JSON
+└── README.md                   # Documentation du projet
+
 ```
 
 ---
 
-## 🚀 Installation et Lancement
+## 🧪 Scénarios de Validation & Tests
 
-1. **Cloner le projet :**
-   ```bash
-   git clone https://github.com/essaadicharaf/Sprint-2-Brief-1-Mon-Dex.git
-   cd Sprint-2-Brief-1-Mon-Dex
-   ```
-
-2. **Installer les dépendances de développement :**
-   ```bash
-   npm install
-   ```
-
-3. **Compiler le fichier CSS Tailwind :**
-   ```bash
-   # Mode surveillance (watch) lors du développement :
-   npm run watch
-
-   # Compilation de production minifiée :
-   npm run build
-   ```
-
-4. **Lancer l'application :**
-   Ouvrez `index.html` dans un navigateur moderne ou via l'extension **Live Server** dans VS Code.
+| Fonctionnalité              | Scénario testé                                        | Résultat obtenu                                                                                        |
+| --------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Chargement & Pagination** | Ouverture initiale + clic sur _Charger plus_          | 20 cartes affichées au démarrage, +20 ajoutées à chaque clic, compteur mis à jour.                     |
+| **Recherche & État Vide**   | Recherche de `"Agumon"` puis `"zzzz"`                 | Fiche unique affichée pour `"Agumon"` ; message _Aucune créature trouvée_ (404) pour `"zzzz"`.         |
+| **État Erreur & Reprise**   | DevTools › Network › _Offline_ + clic _Réessayer_     | Message d'erreur affiché hors ligne ; rechargement réussi dès le retour de la connexion.               |
+| **Persistance Favoris**     | Ajout aux favoris + filtre _Favoris_ + `F5`           | Étoile dorée active, filtrage exact et conservation dans `localStorage` après rechargement.            |
+| **Persistance Recherche**   | Recherche `"Gabumon"` + `F5` dans l'onglet            | Requête restaurée automatiquement depuis `sessionStorage` et réinitialisée à la fermeture de l'onglet. |
+| **Responsive Design**       | Écrans `360px` (mobile), `768px` (tablette), `1280px` | Grille adaptative (1, 2 puis 3 colonnes) sans débordement horizontal.                                  |
 
 ---
 
-## 👨‍💻 Auteur
+## 🚀 Installation & Lancement Local
 
-* **Développeur :** CHARAF EDDINE ESSAADI
+1. **Cloner le dépôt :**
+
+```bash
+git clone [https://github.com/essaadicharaf/Mon-Dex-connecte.git](https://github.com/essaadicharaf/Mon-Dex-connecte.git)
+cd Mon-Dex-connecte
+
+```
+
+2. **Installer les dépendances :**
+
+```bash
+npm install
+
+```
+
+3. **Compiler Tailwind CSS :**
+
+```bash
+# Compilation unique
+npm run build
+
+# Ou mode surveillance pendant le développement
+npm run watch
+
+```
+
+4. **Lancer l'application :**
+
+- Ouvrir `index.html` via un serveur local (extension **Live Server** sur VS Code ou `npx serve`), requis pour l'exécution des modules ES6 (`type="module"`).
+
+---
+
+## 👤 Auteur
+
+- **Développeur :** ESSAADI CHARAF EDDINE
+- **Formation :** YouCode Safi — Développement Web
