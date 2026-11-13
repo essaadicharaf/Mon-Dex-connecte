@@ -53,17 +53,17 @@
       </div>
     </header>
     <main class="mx-auto sm:mt-[50px] flex max-w-7xl flex-col gap-8 px-4 sm:px-8 py-8">
-      <section aria-label="Recherche et filtres" class="flex flex-col gap-8">
+      <section aria-label="Recherche et filtres" class="flex flex-col gap-6">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">Trouver un Digimon</h1>
           <form id="search-form" class="flex w-full md:max-w-lg flex-wrap items-end gap-2">
-            <label class="flex w-full flex-col gap-1.5 text-xs sm:text-sm font-bold text-ink">
+            <label class="flex flex-1 min-w-[200px] flex-col gap-1.5 text-xs sm:text-sm font-bold text-ink">
               Rechercher par nom
               <input
                 id="search"
                 type="search"
                 placeholder="ex. Agumon"
-                class="field font-normal placeholder-muted border-3 border-[#264653] focus:ring-2 focus:ring-brand"
+                class="field font-normal placeholder-muted border-2 border-line focus:outline-none focus:ring-2 focus:ring-brand"
               />
             </label>
             <div class="flex items-center gap-2 shrink-0">
@@ -78,46 +78,63 @@
             </div>
           </form>
         </div>
-        <div
-          id="filters"
-          role="group"
-          aria-label="Filtrer par attribut"
-          class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2 scrollbar-none"
-        >
+
+        <div id="filters" role="group" aria-label="Filtrer par attribut" class="flex flex-wrap items-center gap-2">
           <button
             type="button"
             data-type="all"
-            class="chip bg-brand border-brand text-white shrink-0 focus:ring-2 focus:ring-brand"
+            class="chip bg-brand border-brand text-white shrink-0 transition-colors focus:outline-none focus:ring-2 focus:ring-brand"
           >
             Tous
           </button>
           <button
             type="button"
             data-type="Vaccine"
-            class="chip shrink-0 hover:border-attribute-vaccine focus:ring-2 focus:ring-attribute-vaccine"
+            class="chip shrink-0 transition-colors hover:border-attribute-vaccine hover:bg-attribute-vaccine hover:text-white focus:outline-none focus:ring-2 focus:ring-attribute-vaccine"
           >
             Vaccine
           </button>
           <button
             type="button"
             data-type="Data"
-            class="chip shrink-0 hover:border-attribute-data focus:ring-2 focus:ring-attribute-data"
+            class="chip shrink-0 transition-colors hover:border-attribute-data hover:bg-attribute-data hover:text-white focus:outline-none focus:ring-2 focus:ring-attribute-data"
           >
             Data
           </button>
           <button
             type="button"
             data-type="Virus"
-            class="chip shrink-0 hover:border-attribute-virus focus:ring-2 focus:ring-attribute-virus"
+            class="chip shrink-0 transition-colors hover:border-attribute-virus hover:bg-attribute-virus hover:text-white focus:outline-none focus:ring-2 focus:ring-attribute-virus"
           >
             Virus
           </button>
           <button
             type="button"
             data-type="Free"
-            class="chip shrink-0 hover:border-attribute-free focus:ring-2 focus:ring-attribute-free"
+            class="chip shrink-0 transition-colors hover:border-attribute-free hover:bg-attribute-free hover:text-white focus:outline-none focus:ring-2 focus:ring-attribute-free"
           >
             Free
+          </button>
+          <button
+            type="button"
+            data-type="favorites"
+            class="chip shrink-0 inline-flex items-center gap-1.5 transition-colors hover:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          >
+            <svg
+              class="w-3.5 h-3.5"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              />
+            </svg>
+            <span>Favoris</span>
           </button>
         </div>
       </section>
@@ -169,155 +186,10 @@
               </p>
             </div>
           </section>
-          <section
-            id="team"
-            aria-label="Mon équipe"
-            class="flex flex-col gap-4 rounded-xl bg-surface p-4 sm:p-6 border-2 border-line shadow-lg"
-          >
-            <div class="flex items-center justify-between">
-              <h2 class="font-display text-2xl font-extrabold text-ink">Mon équipe</h2>
-              <span
-                class="rounded-full bg-brand-light border border-brand/40 px-3 py-1 font-mono text-sm font-bold text-brand"
-              >
-                <span id="team-counter">0</span>/6
-              </span>
-            </div>
-            <p class="text-xs text-muted">6 Digimon au maximum · aucun doublon autorisé.</p>
-            <div id="team-list" class="flex flex-col gap-2 min-h-[100px] justify-center">
-              <p
-                id="empty-team-msg"
-                class="py-6 text-center text-xs text-muted border-2 border-dashed border-line rounded-xl"
-              >
-                Votre équipe est vide. Cliquez sur "Ajouter à l'équipe".
-              </p>
-            </div>
-          </section>
         </aside>
       </div>
-      <section
-        id="create"
-        aria-label="Nouvelle créature"
-        class="flex flex-col gap-6 rounded-xl bg-surface p-6 sm:p-8 border border-line shadow-lg"
-      >
-        <div>
-          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-ink">Nouveau Digimon</h2>
-          <p class="text-muted text-xs sm:text-sm">Chaque champ est vérifié avant l'ajout de la créature.</p>
-        </div>
-        <form id="creature-form" novalidate class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-          <!-- Numéro -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Numéro
-            <input
-              name="id"
-              type="text"
-              required
-              placeholder="#013"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Nom -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Nom
-            <input
-              name="name"
-              type="text"
-              required
-              placeholder="Nom du Digimon"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Attribut -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Attribut
-            <select name="type" required class="field font-normal text-ink border-3 border-[#264653]">
-              <option value="" class="bg-surface text-ink">Choisir un attribut</option>
-              <option value="Vaccine" class="bg-surface text-ink">Vaccine</option>
-              <option value="Data" class="bg-surface text-ink">Data</option>
-              <option value="Virus" class="bg-surface text-ink">Virus</option>
-            </select>
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Niveau  -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Niveau
-            <select name="level" required class="field font-normal text-ink border-3 border-[#264653]">
-              <option value="" class="bg-surface text-ink">Choisir un niveau</option>
-              <option value="Rookie" class="bg-surface text-ink">Rookie</option>
-              <option value="Champion" class="bg-surface text-ink">Champion</option>
-              <option value="Ultimate" class="bg-surface text-ink">Ultimate</option>
-              <option value="Mega" class="bg-surface text-ink">Mega</option>
-            </select>
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Statistique 1 -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Puissance (0 à 999)
-            <input
-              name="stat1"
-              type="text"
-              placeholder="ex. 450"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Statistique 2 -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Défense (0 à 999)
-            <input
-              name="stat2"
-              type="text"
-              placeholder="ex. 320"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Statistique 3 -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Vitesse (0 à 999)
-            <input
-              name="stat3"
-              type="text"
-              placeholder="ex. 380"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Lien Image -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink">
-            Lien de l'image
-            <input
-              name="image"
-              type="text"
-              placeholder="https://…/image.png"
-              class="field font-normal placeholder-muted border-3 border-[#264653]"
-            />
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Description -->
-          <label class="flex flex-col gap-1.5 text-xs font-bold text-ink col-span-full">
-            Description
-            <textarea
-              name="description"
-              rows="3"
-              placeholder="10 à 200 caractères"
-              class="w-full rounded-xl border-2 border-3 border-[#264653] bg-surface p-3 text-sm text-ink font-normal placeholder-muted outline-none transition-all duration-200 focus:border-brand"
-            ></textarea>
-            <span class="error-message text-xs font-normal text-attribute-virus min-h-[16px]"></span>
-          </label>
-          <!-- Boutons -->
-          <div class="flex flex-wrap justify-end gap-3 col-span-full pt-2">
-            <button type="reset" class="btn-outline px-6 py-2.5 text-sm font-semibold">Effacer</button>
-            <button type="submit" class="btn-primary px-6 py-2.5 text-sm font-bold">Ajouter le Digimon</button>
-          </div>
-        </form>
-      </section>
     </main>
     <footer class="mx-auto text-center max-w-7xl px-4 sm:px-8 pb-10 text-xs text-muted">ESSAADI CHARAF EDDINE</footer>
-    <!-- Scripts JS -->
-    <!-- <script src="./data.js" defer></script>
-    <script src="./script.js" defer></script> -->
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
