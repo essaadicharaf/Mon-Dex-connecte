@@ -45,7 +45,9 @@ export const getCreatureByName = async (query) => {
   const cleanQuery = Number(text) || text;
   const response = await fetch(`${BASE_URL}/digimon/${cleanQuery}`);
   if (!response.ok) {
-    throw new Error(`Erreur HTTP : ${response.status}`);
+    const error = new Error(`Erreur HTTP : ${response.status}`);
+    error.status = response.status;
+    throw error;
   }
   const data = await response.json();
   return toCreature(data);

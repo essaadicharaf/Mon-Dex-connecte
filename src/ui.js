@@ -1,3 +1,4 @@
+import { isFavorite } from "./storage.js";
 const grid = document.querySelector("#grid");
 const creatureCount = document.querySelector("#creature-count");
 const getBadgeStyle = (type) => {
@@ -9,6 +10,20 @@ const getBadgeStyle = (type) => {
 const createCardElement = (creature) => {
   const badgeStyle = getBadgeStyle(creature.type);
   const article = document.createElement("article");
+  const favorite = isFavorite(creature.id);
+
+  const starBtnStyle = favorite
+    ? "bg-white shadow-md scale-105 border-amber-400/50"
+    : "text-muted hover:text-amber-500 bg-white/85 hover:bg-white border-line/20";
+
+  const starSvg = favorite
+    ? `<svg class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+       </svg>`
+    : `<svg class="w-4 h-4 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+       </svg>`;
+
   article.setAttribute("data-id", creature.id);
   article.className =
     "flex h-full flex-col justify-between gap-3 rounded-xl bg-surface p-3 pb-4 border-2 border-line shadow-md hover:-translate-y-1 hover:border-brand transition-all duration-200 cursor-pointer";
@@ -17,12 +32,23 @@ const createCardElement = (creature) => {
       <div class="relative flex h-54 w-full items-center justify-center rounded-xl bg-slate-300 border border-line/50 overflow-hidden p-1">
         <img src="${creature.image}" alt="${creature.name}" class=" max-h-50 w-full object-cover rounded-lg pointer-events-none" />
         <span class="absolute left-3 top-2 font-mono text-xs text-ink font-bold">${creature.id}</span>
+      <button
+  type="button"
+  aria-label="Ajouter aux favoris"
+  class="absolute right-3 top-2.5 ${starBtnStyle} border rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+  data-action="toggle-fav"
+  data-id="${creature.id}"
+>
+  ${starSvg}
+</button>
       </div>
       <div class="flex items-start justify-between gap-2">
         <h3 class="font-display text-base font-bold text-ink leading-snug line-clamp-2">${creature.name}</h3>
         <span class="shrink-0 rounded-full px-3 py-1 bg-white border ${badgeStyle} text-xs font-bold">${creature.type}</span>
       </div>
+      <div class="flex items-start justify-between gap-2">
       <p class="text-xs text-muted">${creature.level} · Attaque ${creature.stats.attack}</p>
+    </div>
     </div>
     <button type="button" data-action="add-team" data-id="${creature.id}" class="btn-outline mt-auto pt-1 text-sm py-2 text-white bg-brand border-none rounded-lg hover:opacity-90">
       Ajouter à l'équipe
@@ -30,6 +56,7 @@ const createCardElement = (creature) => {
   `;
   return article;
 };
+// display creatures
 export const renderGrid = (creaturesList, append = false) => {
   if (!grid) return;
   if (!append) {
@@ -134,5 +161,58 @@ export const resetDetail = () => {
       <h3 class="font-display text-base font-bold text-ink">Aucun Digimon sélectionné</h3>
       <p class="text-xs text-muted m-1 max-w-[220px]">Cliquez sur une carte de la grille pour afficher ses détails et ses statistiques.</p>
     </div>
+  `;
+};
+// loading
+export const renderGridLoading = () => {
+  if (!grid) return;
+  grid.innerHTML = `
+    <div class="col-span-full flex flex-col items-center justify-center py-12 gap-3">
+      <span class="w-10 h-10 border-4 border-brand border-t-transparent rounded-full animate-spin"></span>
+      <p class="text-xs font-semibold text-muted">Chargement des Digimon...</p>
+    </div>
+  `;
+};
+// if grid empty 404 / vide
+export const renderGridEmpty = (query) => {
+  if (!grid) return;
+  grid.innerHTML = `
+    <div class="col-span-full py-12 text-center text-sm text-ink bg-surface border-2 border-dashed border-line rounded-xl">
+      Aucune créature trouvée pour « ${query} »
+    </div>
+  `;
+};
+// error grid
+export const renderGridError = () => {
+  if (!grid) return;
+  grid.innerHTML = `
+    <div class="col-span-full py-12 text-center bg-surface border-2 border-dashed border-attribute-virus/50 rounded-xl flex flex-col items-center gap-3">
+      <p class="text-attribute-virus font-bold text-sm">Impossible de charger les créatures. Vérifiez votre connexion.</p>
+      <button type="button" id="btn-retry-grid" class="btn-primary px-5 py-2 text-xs font-bold">
+        Réessayer
+      </button>
+    </div>
+  `;
+};
+// loading detail
+export const renderDetailLoading = () => {
+  if (!detailPanel) return;
+  detailPanel.className =
+    "flex flex-col items-center justify-center text-center gap-3 rounded-xl border border-line bg-surface p-8 min-h-[360px] shadow-sm";
+  detailPanel.innerHTML = `
+    <span class="w-10 h-10 border-4 border-brand border-t-transparent rounded-full animate-spin"></span>
+    <p class="text-xs font-semibold text-muted">Chargement des détails...</p>
+  `;
+};
+// error detail
+export const renderDetailError = (creatureId) => {
+  if (!detailPanel) return;
+  detailPanel.className =
+    "flex flex-col items-center justify-center text-center gap-4 rounded-xl border-2 border-dashed border-attribute-virus/50 bg-surface p-8 min-h-[360px] shadow-sm";
+  detailPanel.innerHTML = `
+    <p class="text-sm font-bold text-attribute-virus">Impossible de charger les détails.</p>
+    <button type="button" id="btn-retry-detail" data-id="${creatureId}" class="btn-primary px-4 py-2 text-xs font-bold">
+      Réessayer
+    </button>
   `;
 };
